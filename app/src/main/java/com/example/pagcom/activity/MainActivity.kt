@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.pagcom.R
 import com.example.pagcom.databinding.ActivityMainBinding
@@ -35,9 +36,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
 
-        val navHostFragment =
-            Navigation.findNavController(this, R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+        navController = findNavController(R.id.nav_host_fragment)
+
     }
 
 
@@ -86,47 +86,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {}
 }
-
-// debtorsViewHolder.binding.txtLetter.setBackground(CircleUtil.getRandomCircle(context,position));
-//public class CircleUtil {
-//    public static Drawable getRandomCircle(Context context, int position){
-//        Drawable drawable = context.getResources().getDrawable(R.drawable.circle_red);
-//        GradientDrawable shapeDrawable = (GradientDrawable) drawable;
-//        int[] colors = context.getResources().getIntArray(R.array.colors);
-//
-//        int times = times(position);
-//        Log.e("TAG","times "+times+" position"+position);
-//        shapeDrawable.setColor(colors[position - times*15]);
-//        return shapeDrawable;
-//    }
-//
-//    public static int getColor(Context context) {
-//        int[] colors = context.getResources().getIntArray(R.array.colors);
-//        Random random = new Random();
-//        return colors[random.nextInt(colors.length-1)];
-//    }
-//
-//    public static int times(int number) {
-//        if (number == 0) {
-//            return 0;
-//
-//        }
-//        int i = 0;
-//        while (true) {
-//
-//
-//            if (number < 15) {
-//                if (i == 0)
-//                    return 0;
-//                return i;
-//            }
-//            number = (number - 15);
-//            i++;
-//
-//        }
-//    }
-//}
-
 
 
 

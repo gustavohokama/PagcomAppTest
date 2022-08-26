@@ -77,7 +77,6 @@ class MainViewModel : ViewModel() {
 
     }
 
-
     fun setImage(bitmap: Bitmap) {
         this.bitmap.value = bitmap
     }
