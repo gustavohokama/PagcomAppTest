@@ -62,5 +62,8 @@ dependencies {
     //Fragment
     implementation "androidx.fragment:fragment-ktx:1.5.2"
 
+    //Service
+    implementation "com.google.android.gms:play-services-location:20.0.0"
+
 
 }
