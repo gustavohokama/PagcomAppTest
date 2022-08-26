@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/stockExchangeFragment"
+        android:name="com.example.pagcom.fragment.StockExchangeFragment"
+        android:label="StockExchangeFragment"
+        tools:layout="@layout/fragment_companies"
+        />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.pagcom.fragment.RegistrationFragment"
+        android:label="RegistrationFragment"
+        tools:layout="@layout/fragment_registration"
+        />
+    <fragment
+        android:id="@+id/camFragment"
+        android:name="com.example.pagcom.fragment.CamFragment"
+        android:label="CamFragment"
+        tools:layout="@layout/fragment_cam"
+        />
+    <fragment
+        android:id="@+id/gpsFragment"
+        android:name="com.example.pagcom.fragment.GpsFragment"
+        android:label="GpsFragment"
+        tools:layout="@layout/fragment_gps"/>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.pagcom.fragment.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home"
+        />
+</navigation>
