@@ -69,6 +69,9 @@ class MainViewModel : ViewModel() {
         ) {
             Toast.makeText( context, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
         }else{
+            regisName.value = ""
+            regisTel.value = ""
+            regisCPF.value = ""
             Toast.makeText( context, "Usuário Cadastrado com Sucesso", Toast.LENGTH_SHORT).show()
         }
     }
