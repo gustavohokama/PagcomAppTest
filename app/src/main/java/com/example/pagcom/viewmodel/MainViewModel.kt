@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -77,7 +78,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun getLocation() {
+        if(Build.MODEL == "A910"){
 
+        }else{
+
+        }
     }
 
     fun setImage(bitmap: Bitmap) {
