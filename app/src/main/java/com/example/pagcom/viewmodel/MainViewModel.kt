@@ -2,11 +2,14 @@ package com.example.pagcom.viewmodel
 
 import android.Manifest
 import android.Manifest.permission.INTERNET
+import android.app.AlertDialog
 import android.app.Service
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.provider.MediaStore
@@ -19,6 +22,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.pagcom.util.maskCpf
+import com.example.pagcom.util.maskPhone
 import com.example.pagcom.web.CompanieWebClient
 import com.example.pagcom.web.model.CompaniesResponse
 import com.google.android.gms.location.LocationCallback
@@ -26,14 +31,14 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel : ViewModel(), LocationListener {
 
     private lateinit var navController: NavController
     lateinit var context: AppCompatActivity
     val bitmap: MutableLiveData<Bitmap> = MutableLiveData<Bitmap>()
-    val regisName: MutableLiveData<String> = MutableLiveData<String>()
-    val regisTel: MutableLiveData<String> = MutableLiveData<String>()
-    val regisCPF: MutableLiveData<String> = MutableLiveData<String>()
+    var regisName: String = ""
+    var regisTel: String = ""
+    var regisCPF: String = ""
     val location: MutableLiveData<String> = MutableLiveData<String>()
 
 
@@ -54,18 +59,18 @@ class MainViewModel : ViewModel() {
         if (!cameraPermission()) {
             ActivityCompat.requestPermissions(
                 context,
-                arrayOf(Manifest.permission.CAMERA),111
+                arrayOf(Manifest.permission.CAMERA), 111
             )
         }
 
         if (!locationPerminssion()) {
             ActivityCompat.requestPermissions(
                 context,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),111
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 111
             )
             ActivityCompat.requestPermissions(
                 context,
-                arrayOf( Manifest.permission.ACCESS_COARSE_LOCATION), 111
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 111
             )
         }
 
@@ -114,21 +119,33 @@ class MainViewModel : ViewModel() {
     }
 
     fun save() {
-        if (regisName.value.isNullOrEmpty() ||
-            regisTel.value.isNullOrEmpty() ||
-            regisCPF.value.isNullOrEmpty()
+        if (regisName.isNullOrEmpty() ||
+            regisTel.isNullOrEmpty() ||
+            regisCPF.isNullOrEmpty()
         ) {
             Toast.makeText(context, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
-        } else if (regisTel.value?.length != 11) {
+        } else if (regisTel.length != 11) {
             Toast.makeText(context, "Telefone Preenchido Incorretament", Toast.LENGTH_SHORT).show()
-        } else if (regisCPF.value?.length != 11) {
+        } else if (regisCPF.length != 11) {
             Toast.makeText(context, "CPF Preenchido Incorretament", Toast.LENGTH_SHORT).show()
 
         } else {
-            regisName.value = ""
-            regisTel.value = ""
-            regisCPF.value = ""
-            Toast.makeText(context, "Usuário Cadastrado com Sucesso", Toast.LENGTH_SHORT).show()
+
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Cadastrado com Sucesso")
+            builder.setMessage(
+                "Nome: $regisName \n" +
+                        "Telefone: ${maskPhone(regisTel)} \n" +
+                        "CPF: ${maskCpf(regisCPF)} "
+            )
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                })
+            builder.create()
+            builder.show()
+            regisName = ""
+            regisTel = ""
+            regisCPF = ""
         }
     }
 
@@ -142,13 +159,21 @@ class MainViewModel : ViewModel() {
         } else {
 //            val location =
 //                LocationServices.getFusedLocationProviderClient(context).lastLocation
-            object : LocationCallback(){
+            object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
-                    if (locationResult != null){
+                    if (locationResult != null) {
                         location.value = "Sua Localização é $locationResult"
                     }
                 }
             }
         }
+    }
+
+    override fun onLocationChanged(p0: Location) {
+        TODO("Not yet implemented")
+    }
+
+    fun searchLocation() {
+
     }
 }

@@ -1,79 +1,70 @@
-package com.example.pagcom.util;
+package com.example.pagcom.util
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
+import android.widget.EditText
+import android.text.TextWatcher
+import com.example.pagcom.util.CpfCnpjMaks
+import android.text.Editable
+import java.lang.Exception
 
-public class CpfCnpjMaks {
-    private static final String maskCNPJ = "##.###.###/####-##";
-    private static final String maskCPF = "###.###.###-##";
-
-
-    public static String unmask(String s) {
-        return s.replaceAll("[^0-9]*", "");
+object CpfCnpjMaks {
+    private const val maskCNPJ = "##.###.###/####-##"
+    private const val maskCPF = "###.###.###-##"
+    fun unmask(s: String): String {
+        return s.replace("[^0-9]*".toRegex(), "")
     }
 
-    public static TextWatcher insert(final EditText editText) {
-        return new TextWatcher() {
-            boolean isUpdating;
-            String old = "";
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String str = CpfCnpjMaks.unmask(s.toString());
-                String mask;
-                String defaultMask = getDefaultMask(str);
-                switch (str.length()) {
-                    case 11:
-                        mask = maskCPF;
-                        break;
-                    case 14:
-                        mask = maskCNPJ;
-                        break;
-
-                    default:
-                        mask = defaultMask;
-                        break;
+    fun insert(editText: EditText): TextWatcher {
+        return object : TextWatcher {
+            var isUpdating = false
+            var old = ""
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val str = unmask(s.toString())
+                val mask: String
+                val defaultMask = getDefaultMask(str)
+                mask = when (str.length) {
+                    11 -> maskCPF
+                    14 -> maskCNPJ
+                    else -> defaultMask
                 }
-
-                String mascara = "";
+                var mascara = ""
                 if (isUpdating) {
-                    old = str;
-                    isUpdating = false;
-                    return;
+                    old = str
+                    isUpdating = false
+                    return
                 }
-                int i = 0;
-                for (char m : mask.toCharArray()) {
-                    if ((m != '#' && str.length() > old.length()) || (m != '#' && str.length() < old.length() && str.length() != i)) {
-                        mascara += m;
-                        continue;
+                var i = 0
+                for (m in mask.toCharArray()) {
+                    if (m != '#' && str.length > old.length || m != '#' && str.length < old.length && str.length != i) {
+                        mascara += m
+                        continue
                     }
-
-                    try {
-                        mascara += str.charAt(i);
-                    } catch (Exception e) {
-                        break;
+                    mascara += try {
+                        str[i]
+                    } catch (e: Exception) {
+                        break
                     }
-                    i++;
+                    i++
                 }
-                isUpdating = true;
-                editText.setText(mascara);
-                editText.setSelection(mascara.length());
+                isUpdating = true
+                editText.setText(mascara)
+                editText.setSelection(mascara.length)
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int,
+                after: Int
+            ) {
             }
 
-            public void afterTextChanged(Editable s) {
-            }
-        };
+            override fun afterTextChanged(s: Editable) {}
+        }
     }
 
-    private static String getDefaultMask(String str) {
-        String defaultMask = maskCPF;
-        if (str.length() > 11){
-            defaultMask = maskCNPJ;
+    private fun getDefaultMask(str: String): String {
+        var defaultMask = maskCPF
+        if (str.length > 11) {
+            defaultMask = maskCNPJ
         }
-        return defaultMask;
+        return defaultMask
     }
 }
