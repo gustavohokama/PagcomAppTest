@@ -16,5 +16,6 @@ class GpsFragment : Fragment(R.layout.fragment_gps) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentGpsBinding.bind(view)
+        binding.viewModel = viewModel
     }
 }

@@ -21,6 +21,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.pagcom.web.CompanieWebClient
 import com.example.pagcom.web.model.CompaniesResponse
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
 
@@ -32,7 +34,7 @@ class MainViewModel : ViewModel() {
     val regisName: MutableLiveData<String> = MutableLiveData<String>()
     val regisTel: MutableLiveData<String> = MutableLiveData<String>()
     val regisCPF: MutableLiveData<String> = MutableLiveData<String>()
-    val resposta: MutableLiveData<String> = MutableLiveData<String>()
+    val location: MutableLiveData<String> = MutableLiveData<String>()
 
 
     fun firstConfig(context: AppCompatActivity) {
@@ -112,9 +114,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun save() {
-        if (regisName.value.isNullOrBlank() ||
-            regisTel.value.isNullOrBlank() ||
-            regisCPF.value.isNullOrBlank()
+        if (regisName.value.isNullOrEmpty() ||
+            regisTel.value.isNullOrEmpty() ||
+            regisCPF.value.isNullOrEmpty()
         ) {
             Toast.makeText(context, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
         } else if (regisTel.value?.length != 11) {
@@ -130,12 +132,23 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getLocation() {
-
+    fun configLocation() {
+        if (Build.MODEL == "A910") {
+            location.value = "Fiz algumas pesquisas, e constatei que nos terminais de pagamento" +
+                    "não possui GPS, por isso não é possível acessar a localização via Google." +
+                    "Continuando minhas pesquisas, consegui observar que pode haver uma maneira" +
+                    "de recuperar a localização via chip, porém necessitaria de estudo bem mais" +
+                    "avançado."
+        } else {
+//            val location =
+//                LocationServices.getFusedLocationProviderClient(context).lastLocation
+            object : LocationCallback(){
+                override fun onLocationResult(locationResult: LocationResult) {
+                    if (locationResult != null){
+                        location.value = "Sua Localização é $locationResult"
+                    }
+                }
+            }
+        }
     }
-
-    fun setImage(bitmap: Bitmap) {
-        this.bitmap.value = bitmap
-    }
-
 }

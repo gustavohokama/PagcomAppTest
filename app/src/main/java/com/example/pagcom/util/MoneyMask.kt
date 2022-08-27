@@ -11,7 +11,7 @@ fun TextView.toMoney() {
         secondNumber.substring(0, 3)
     else
         secondNumber.substring(0, 2)
-    this.text = "R$ $firstNumber.$secondNumber"
+    this.text = "R$ $firstNumber,$secondNumber"
 }
 
 fun TextView.toCpf() {
