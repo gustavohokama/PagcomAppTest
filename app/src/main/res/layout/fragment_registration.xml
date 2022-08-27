@@ -29,6 +29,8 @@
 
 
         <EditText
+            android:inputType="textPersonName"
+            android:text="@{viewModel.regisName}"
             android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,13 +45,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{viewModel.regisName}"
+            android:text="Telefone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/editText"
             app:layout_constraintTop_toBottomOf="@+id/editText" />
 
         <EditText
+            android:inputType="phone"
             android:id="@+id/editText2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,6 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
         <EditText
+            android:inputType="number"
             android:text="@{viewModel.regisCPF}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

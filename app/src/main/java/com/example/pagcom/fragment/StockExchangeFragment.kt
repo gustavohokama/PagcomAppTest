@@ -22,6 +22,7 @@ class StockExchangeFragment : Fragment(R.layout.fragment_companies) {
             it.let {
                 binding.recyclerCompanies.adapter = ListAdapter(it!!)
                 binding.recyclerCompanies.layoutManager = LinearLayoutManager(requireContext())
+                binding.txtTotalCompanies.text = (it.size + 1).toString()
             }
         }
     }

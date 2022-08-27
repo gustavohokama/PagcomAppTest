@@ -54,7 +54,7 @@ class MainViewModel : ViewModel() {
             )
         }
 
-        if (!locationPerminssion()){
+        if (!locationPerminssion()) {
             ActivityCompat.shouldShowRequestPermissionRationale(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -115,6 +115,11 @@ class MainViewModel : ViewModel() {
             regisCPF.value.isNullOrBlank()
         ) {
             Toast.makeText(context, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+        } else if (regisTel.value?.length != 11) {
+            Toast.makeText(context, "Telefone Preenchido Incorretament", Toast.LENGTH_SHORT).show()
+        } else if (regisCPF.value?.length != 11) {
+            Toast.makeText(context, "CPF Preenchido Incorretament", Toast.LENGTH_SHORT).show()
+
         } else {
             regisName.value = ""
             regisTel.value = ""

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pagcom.R
 import com.example.pagcom.util.Circle
+import com.example.pagcom.util.toMoney
 import com.example.pagcom.web.model.CompaniesResponse
 import kotlinx.android.synthetic.main.item_list_companies.view.*
 
@@ -36,6 +37,7 @@ class ListAdapter(private val data: List<CompaniesResponse>) :
             )
             itemView.txt_name_companie.text = companies[position].nm_empresa
             itemView.txt_value_companie.text = companies[position].pctl_ctra
+            itemView.txt_value_companie.toMoney()
         }
     }
 
