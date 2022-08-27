@@ -22,7 +22,11 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             this.viewModel.regisName = binding.edtName.text.toString()
             this.viewModel.regisTel = binding.edtTel.text.toString()
             this.viewModel.regisCPF = binding.edtCpf.text.toString()
-            this.viewModel.save()
+            this.viewModel.save{
+                binding.edtName.text.clear()
+                binding.edtTel.text.clear()
+                binding.edtCpf.text.clear()
+            }
         }
     }
 

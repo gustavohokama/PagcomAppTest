@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
+import javax.security.auth.callback.Callback
 
 class MainViewModel : ViewModel(), LocationListener {
 
@@ -118,16 +119,16 @@ class MainViewModel : ViewModel(), LocationListener {
         context.startActivityForResult(cam_intent, 123)
     }
 
-    fun save() {
+    fun save(callback: ()-> Unit) {
         if (regisName.isNullOrEmpty() ||
             regisTel.isNullOrEmpty() ||
             regisCPF.isNullOrEmpty()
         ) {
             Toast.makeText(context, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
         } else if (regisTel.length != 11) {
-            Toast.makeText(context, "Telefone Preenchido Incorretament", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Telefone Preenchido Incorretamente", Toast.LENGTH_SHORT).show()
         } else if (regisCPF.length != 11) {
-            Toast.makeText(context, "CPF Preenchido Incorretament", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "CPF Preenchido Incorretamente", Toast.LENGTH_SHORT).show()
 
         } else {
 
@@ -146,6 +147,7 @@ class MainViewModel : ViewModel(), LocationListener {
             regisName = ""
             regisTel = ""
             regisCPF = ""
+            callback.invoke()
         }
     }
 
@@ -170,7 +172,6 @@ class MainViewModel : ViewModel(), LocationListener {
     }
 
     override fun onLocationChanged(p0: Location) {
-        TODO("Not yet implemented")
     }
 
     fun searchLocation() {

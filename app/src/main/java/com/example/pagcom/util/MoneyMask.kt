@@ -15,16 +15,16 @@ fun TextView.toMoney() {
 }
 
 fun maskPhone(phone: String):String{
-    val dd = phone.substring(0, 1)
-    val firstnumber = phone.substring(2, 6)
-    val secondnumber = phone.substring(7, 10)
+    val dd = phone.substring(0, 2)
+    val firstnumber = phone.substring(2, 7)
+    val secondnumber = phone.substring(7, 11)
     return "($dd) $firstnumber-$secondnumber"
 }
 
 fun maskCpf(cpf: String):String{
     val first = cpf.substring(0, 3)
-    val second = cpf.substring(3, 5)
-    val third = cpf.substring(6, 8)
-    val verify = cpf.substring(9, 10)
+    val second = cpf.substring(3, 6)
+    val third = cpf.substring(6, 9)
+    val verify = cpf.substring(9, 11)
     return "$first.$second.$third-$verify"
 }
