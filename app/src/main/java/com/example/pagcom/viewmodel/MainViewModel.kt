@@ -1,6 +1,7 @@
 package com.example.pagcom.viewmodel
 
 import android.Manifest
+import android.Manifest.permission.INTERNET
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
     private lateinit var navController: NavController
-    private lateinit var context: AppCompatActivity
+    lateinit var context: AppCompatActivity
     val bitmap: MutableLiveData<Bitmap> = MutableLiveData<Bitmap>()
     val regisName: MutableLiveData<String> = MutableLiveData<String>()
     val regisTel: MutableLiveData<String> = MutableLiveData<String>()
@@ -41,27 +42,28 @@ class MainViewModel : ViewModel() {
 
     private fun checkPermissions() {
         if (!internetPermission()) {
-            ActivityCompat.shouldShowRequestPermissionRationale(
+            ActivityCompat.requestPermissions(
                 context,
-                Manifest.permission.INTERNET
+                arrayOf(Manifest.permission.INTERNET),
+                111
             )
         }
 
         if (!cameraPermission()) {
-            ActivityCompat.shouldShowRequestPermissionRationale(
+            ActivityCompat.requestPermissions(
                 context,
-                Manifest.permission.CAMERA
+                arrayOf(Manifest.permission.CAMERA),111
             )
         }
 
         if (!locationPerminssion()) {
-            ActivityCompat.shouldShowRequestPermissionRationale(
+            ActivityCompat.requestPermissions(
                 context,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),111
             )
-            ActivityCompat.shouldShowRequestPermissionRationale(
+            ActivityCompat.requestPermissions(
                 context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                arrayOf( Manifest.permission.ACCESS_COARSE_LOCATION), 111
             )
         }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.example.pagcom.R
 import com.example.pagcom.databinding.FragmentCamBinding
 import com.example.pagcom.databinding.FragmentCompaniesBinding
@@ -15,12 +16,13 @@ class CamFragment: Fragment(R.layout.fragment_cam) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentCompaniesBinding.bind(view)
+        val binding = FragmentCamBinding.bind(view)
+        binding.viewModel = viewModel
 
-        viewModel.bitmap.observe(viewLifecycleOwner) { bitmap ->
+        viewModel.bitmap.observe(requireActivity(), Observer { bitmap ->
             if(bitmap != null){
-                (binding as FragmentCamBinding).imgPicture.setImageBitmap(bitmap)
+                binding.imgPicture.setImageBitmap(bitmap)
             }
-        }
+        })
     }
 }

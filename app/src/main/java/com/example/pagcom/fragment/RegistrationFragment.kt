@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.pagcom.R
 import com.example.pagcom.databinding.FragmentCompaniesBinding
+import com.example.pagcom.databinding.FragmentRegistrationBinding
 import com.example.pagcom.viewmodel.MainViewModel
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
@@ -14,7 +15,8 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentCompaniesBinding.bind(view)
+        val binding = FragmentRegistrationBinding.bind(view)
+        binding.viewModel = viewModel
     }
 
 }

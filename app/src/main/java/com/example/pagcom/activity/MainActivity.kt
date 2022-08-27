@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewModelMain: MainViewModel by viewModels()
         viewModelMain.firstConfig(this)
+        viewModelMain.context = this
 
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,13 +43,15 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == 123) {
+        if (requestCode == 123) {
             val viewModelMain: MainViewModel by viewModels()
             val bitmap = data?.extras?.get("data") as Bitmap
-            viewModelMain.setImage(bitmap)
+            viewModelMain.bitmap.value = bitmap
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+
         }
 
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

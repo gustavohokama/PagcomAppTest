@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.pagcom.R
 import com.example.pagcom.databinding.FragmentCompaniesBinding
+import com.example.pagcom.databinding.FragmentGpsBinding
 import com.example.pagcom.viewmodel.MainViewModel
 
 class GpsFragment : Fragment(R.layout.fragment_gps) {
@@ -14,6 +15,6 @@ class GpsFragment : Fragment(R.layout.fragment_gps) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentCompaniesBinding.bind(view)
+        val binding = FragmentGpsBinding.bind(view)
     }
 }
