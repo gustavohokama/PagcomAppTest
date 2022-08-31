@@ -28,3 +28,7 @@ fun maskCpf(cpf: String):String{
     val verify = cpf.substring(9, 11)
     return "$first.$second.$third-$verify"
 }
+
+fun String.unmask(): String {
+    return this.replace("[^0-9]*".toRegex(), "")
+}

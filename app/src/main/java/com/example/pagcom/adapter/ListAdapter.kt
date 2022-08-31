@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.item_list_companies.view.*
 class ListAdapter(private val data: List<CompaniesResponse>) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
+    private var dataFilter = data.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view =
@@ -22,10 +23,22 @@ class ListAdapter(private val data: List<CompaniesResponse>) :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(data, position)
+        holder.bind(dataFilter, position)
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = dataFilter.size
+
+    fun search(filter: String): Boolean {
+        dataFilter.clear()
+        dataFilter.addAll(data.filter { it.nm_empresa.contains(filter, true) })
+        notifyDataSetChanged()
+        return dataFilter.isEmpty()
+    }
+
+    fun clearSearch(){
+        dataFilter = data.toMutableList()
+        notifyDataSetChanged()
+    }
 
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
